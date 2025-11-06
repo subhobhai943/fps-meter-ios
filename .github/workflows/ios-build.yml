@@ -102,7 +102,7 @@ jobs:
         plutil -lint Info.plist && echo "✅ Info.plist is valid" || echo "❌ Info.plist validation failed"
         
     - name: Archive Build Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ios-build-artifacts
         path: |
