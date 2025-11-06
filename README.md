@@ -4,79 +4,77 @@ A native iOS app built with SwiftUI that displays real-time frames per second (F
 
 ## Features
 
-- **Real-time FPS monitoring** - Displays current FPS with color-coded indicators
-- **Comprehensive statistics** - Shows average, minimum, and maximum FPS
-- **Frame time display** - Shows frame rendering time in milliseconds
-- **Sample tracking** - Keeps track of the number of samples collected
-- **Statistics reset** - Reset all statistics with a single button
-- **Dark theme** - Optimized for viewing in various lighting conditions
+- Real-time FPS monitoring with color-coded indicator
+- Comprehensive statistics: average, min, max FPS
+- Frame time display (ms) and sample count
+- One-tap reset for all stats
+- Dark theme optimized UI
 
-## Technical Details
+## Requirements
 
-### Requirements
 - iOS 14.0+
 - Xcode 12.0+
 - Swift 5.3+
 
-### Architecture
-- **SwiftUI** - Modern declarative UI framework
-- **ObservableObject** - Reactive data flow with Combine
-- **CADisplayLink** - High-precision frame rate monitoring
-- **Color-coded FPS display**:
-  - 🟢 Green: 50+ FPS (Excellent)
-  - 🟡 Yellow: 30-49 FPS (Good)
-  - 🔴 Red: Below 30 FPS (Poor)
+## Getting Started
 
-### Core Components
+1. Clone the repository:
+   - `git clone https://github.com/subhobhai943/fps-meter-ios.git`
+2. Open the Xcode project:
+   - `open FPSMeter.xcodeproj`
+3. Select a simulator or a connected iPhone.
+4. Build and run.
 
-#### FPSCounter
-- Manages CADisplayLink for frame rate monitoring
-- Calculates real-time FPS, averages, and statistics
-- Maintains a rolling history of 60 FPS samples
-- Thread-safe updates using DispatchQueue
+## Continuous Integration (CI)
 
-#### ContentView
-- Main SwiftUI interface with gradient background
-- Large, prominent FPS display
-- Statistics panel with organized metrics
-- Reset functionality for clearing data
+This repository uses GitHub Actions to build and validate the project on every push and pull request.
 
-## Installation
+- Workflow file: `.github/workflows/ios-build.yml`
+- Runners: `macos-latest`
+- Xcode: 15.0
+- Caching: Swift Package Manager cache
+- Artifacts: Build artifacts are uploaded using `actions/upload-artifact@v4` (v3 is deprecated)
 
-1. Clone this repository
-2. Open `FPSMeter.xcodeproj` in Xcode
-3. Select your target device (iPhone)
-4. Build and run the project
+### Triggers
 
-## Usage
+- Push to `main`, `develop`
+- Pull requests targeting `main`
 
-1. Launch the app on your iPhone
-2. The FPS meter will automatically start monitoring
-3. View real-time FPS in the large central display
-4. Check statistics panel for detailed metrics
-5. Tap "Reset Stats" to clear all collected data
+### What the workflow does
 
-## File Structure
+- Checks out the repository
+- Sets up Xcode 15
+- Caches SwiftPM dependencies
+- Resolves packages
+- Builds for iOS Simulator
+- Compiles Swift files for syntax validation
+- Validates `Info.plist`
+- Uploads build artifacts
+- Runs code quality checks
+
+## Project Structure
 
 ```
-FPSMeter/
-├── FPSMeterApp.swift      # App entry point
-├── ContentView.swift      # Main UI view
-├── FPSCounter.swift       # FPS monitoring logic
-└── README.md             # This file
+fps-meter-ios/
+├── FPSMeterApp.swift
+├── ContentView.swift
+├── FPSCounter.swift
+├── Info.plist
+├── LICENSE
+├── README.md
+├── Package.swift
+├── FPSMeter.xcodeproj/
+│   └── project.pbxproj
+└── .github/workflows/
+    └── ios-build.yml
 ```
 
-## Performance Notes
+## Notes
 
-- The app uses CADisplayLink tied to the main thread for accurate FPS measurement
-- Minimal performance impact on the device
-- Statistics are calculated in real-time without blocking the UI
-- Memory usage is optimized with a rolling sample history
+- CADisplayLink is used for accurate FPS measurement.
+- Statistics use a rolling window of 60 samples.
+- CI builds disable code signing and target iOS Simulator.
 
 ## License
 
-MIT License - Feel free to use and modify as needed.
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
+MIT License. See `LICENSE` for details.
